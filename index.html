@@ -1,0 +1,66 @@
+<input type="text" data-bind="value: koMessage">
+<button data-bind="click: koSend">Send</button>
+<ul data-bind="foreach: koMessages">
+  <li data-bind="text: text"></li>
+</ul>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAcOaoGKBxW9FyPfpDr-hXaeQK91cb8sjM",
+    authDomain: "photo-share-23.firebaseapp.com",
+    databaseURL: "https://photo-share-23.firebaseio.com",
+    projectId: "photo-share-23",
+    storageBucket: "",
+    messagingSenderId: "950716869482"
+  };
+  firebase.initializeApp(config);
+
+  // this is test... too bad method.
+  var login = window.confirm("new user?");
+  if (login) {
+    var user = window.prompt("email?");
+    var pass = window.prompt("pass?");
+    firebase.auth().createUserWithEmailAndPassword(user, pass);
+  } else {
+    var user = window.prompt("email?");
+    var pass = window.prompt("pass?");
+    firebase.auth().signInWithEmailAndPassword(user, pass);
+  }
+  
+  // when login status changed, call this.
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log(user);
+    } else {
+      console.log("no auth");
+    }
+  });
+
+  var messagingRef = firebase.database().ref("messages");
+  var vm = {
+    koMessages: ko.observable(),
+    koMessage: ko.observable(),
+    koSend: function() {
+      var post = messagingRef.push();
+      post.set({
+        text: this.koMessage()
+      });
+    }
+  };
+
+  messagingRef.on("value", function(snapshot) {
+    var list = [];
+    // snapshot is like array object.
+    // use forEach to array checking.
+    // but maybe findable more better method.
+    snapshot.forEach(function(child) {
+      list.push(child.val());
+    });
+    vm.koMessages(list);
+  });
+
+  ko.applyBindings(vm);
+
+</script>
