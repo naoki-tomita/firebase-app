@@ -4,9 +4,23 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "local-web-server": "^2.2.4"
+    "@types/react": "^16.0.5",
+    "@types/react-dom": "^15.5.4",
+    "@types/webpack": "^3.0.11",
+    "awesome-typescript-loader": "^3.2.3",
+    "chokidar-cli": "^1.2.0",
+    "firebase": "^4.3.1",
+    "local-web-server": "^2.2.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2",
+    "webpack": "^3.6.0"
   },
   "scripts": {
-    "serve": "ws"
+    "serve": "ws",
+    "start": "yarn run watch & yarn run serve",
+    "watch": "chokidar ./scripts/**/* -c 'yarn build'",
+    "build": "webpack"
   }
 }
