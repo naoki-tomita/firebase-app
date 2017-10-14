@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DropImage } from "./DropImage";
+import { ImageAcceptable } from "./ImageAcceptable";
 
 interface Props {
   imageRef: firebase.database.Reference;
@@ -32,7 +32,7 @@ export class Images extends React.Component<Props, State> {
         <ul>
           {this.createImages()}
         </ul>
-        <DropImage addImages={this.addImages}/>
+        <ImageAcceptable addImages={this.addImages}/>
       </div>
     );
   }

@@ -7,7 +7,7 @@ interface Props {
 // declare const FileReader: any;
 // declare const btoa: any;
 
-export class DropImage extends React.Component<Props> {
+export class ImageAcceptable extends React.Component<Props> {
   public render() {
     return (
       <div>
@@ -17,17 +17,26 @@ export class DropImage extends React.Component<Props> {
           width: "100%", 
           height: "100px",
           borderRadius: "10px",
-        }} onDragOver={this.dragover} onDrop={this.drop}>Drop files here</div>
+        }} onDrop={this.dropFiles}>Drop files here</div>
+        <input type="file" onChange={this.setFiles}/>
       </div>
     );
   }
-  private dragover = (evt: any) => {
+
+  private setFiles = async (evt: any) => {
     evt.stopPropagation();
     evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy';
+
+    const files: any[] = Array.prototype.slice.call(evt.target.files);; // FileList object.
+    const arr = [];
+    for (let i = 0; i < files.length; i++) {
+      const a: string = await this.convertFileToBase64(files[i]) as string;
+      arr.push(a);
+    }
+    this.props.addImages(arr);
   }
 
-  private drop = async (evt: any) => {
+  private dropFiles = async (evt: any) => {
     evt.stopPropagation();
     evt.preventDefault();
 

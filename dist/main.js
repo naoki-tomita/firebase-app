@@ -48940,7 +48940,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(45);
-var DropImage_1 = __webpack_require__(339);
+var ImageAcceptable_1 = __webpack_require__(339);
 var Images = /** @class */ (function (_super) {
     __extends(Images, _super);
     function Images(p) {
@@ -48969,7 +48969,7 @@ var Images = /** @class */ (function (_super) {
     Images.prototype.render = function () {
         return (React.createElement("div", null,
             React.createElement("ul", null, this.createImages()),
-            React.createElement(DropImage_1.DropImage, { addImages: this.addImages })));
+            React.createElement(ImageAcceptable_1.ImageAcceptable, { addImages: this.addImages })));
     };
     Images.prototype.createImages = function () {
         return this.state.images.map(function (i, j) { return React.createElement("li", { key: j },
@@ -49035,16 +49035,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(45);
 // declare const FileReader: any;
 // declare const btoa: any;
-var DropImage = /** @class */ (function (_super) {
-    __extends(DropImage, _super);
-    function DropImage() {
+var ImageAcceptable = /** @class */ (function (_super) {
+    __extends(ImageAcceptable, _super);
+    function ImageAcceptable() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.dragover = function (evt) {
-            evt.stopPropagation();
-            evt.preventDefault();
-            evt.dataTransfer.dropEffect = 'copy';
-        };
-        _this.drop = function (evt) { return __awaiter(_this, void 0, void 0, function () {
+        _this.setFiles = function (evt) { return __awaiter(_this, void 0, void 0, function () {
+            var files, arr, i, a;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        evt.stopPropagation();
+                        evt.preventDefault();
+                        files = Array.prototype.slice.call(evt.target.files);
+                        ; // FileList object.
+                        arr = [];
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i < files.length)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.convertFileToBase64(files[i])];
+                    case 2:
+                        a = _a.sent();
+                        arr.push(a);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        this.props.addImages(arr);
+                        return [2 /*return*/];
+                }
+            });
+        }); };
+        _this.dropFiles = function (evt) { return __awaiter(_this, void 0, void 0, function () {
             var files, arr, i, a;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -49074,7 +49097,7 @@ var DropImage = /** @class */ (function (_super) {
         }); };
         return _this;
     }
-    DropImage.prototype.render = function () {
+    ImageAcceptable.prototype.render = function () {
         return (React.createElement("div", null,
             React.createElement("div", { style: {
                     backgroundColor: "#cccccc",
@@ -49082,9 +49105,10 @@ var DropImage = /** @class */ (function (_super) {
                     width: "100%",
                     height: "100px",
                     borderRadius: "10px",
-                }, onDragOver: this.dragover, onDrop: this.drop }, "Drop files here")));
+                }, onDrop: this.dropFiles }, "Drop files here"),
+            React.createElement("input", { type: "file", onChange: this.setFiles })));
     };
-    DropImage.prototype.convertFileToBase64 = function (file) {
+    ImageAcceptable.prototype.convertFileToBase64 = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve) {
@@ -49099,9 +49123,9 @@ var DropImage = /** @class */ (function (_super) {
             });
         });
     };
-    return DropImage;
+    return ImageAcceptable;
 }(React.Component));
-exports.DropImage = DropImage;
+exports.ImageAcceptable = ImageAcceptable;
 
 
 /***/ })
