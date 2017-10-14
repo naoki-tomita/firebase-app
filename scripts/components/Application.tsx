@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as firebase from "firebase";
 import { Login } from "./Login";
-import { Chat } from "./Chat";
+import { Images } from "./Images";
 
 interface Props {
   firebase: typeof firebase;
@@ -31,7 +31,7 @@ export class Application extends React.Component<Props, State> {
     if (!this.state.loggedin) {
       return (<Login login={this.handleLogin}/>);
     }
-    return (<Chat messageRef={this.props.firebase.database().ref("messages")}/>);
+    return (<Images imageRef={this.props.firebase.database().ref("images")}/>);
   }
 
   private handleLogin = (email: string, password: string) => {

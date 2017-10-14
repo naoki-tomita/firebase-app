@@ -13,7 +13,7 @@ interface State {
 export class Login extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = { email: "user@example.co.jp", password: "password" };
   }
 
   public render() {
