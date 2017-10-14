@@ -48906,16 +48906,13 @@ var Login = /** @class */ (function (_super) {
         return _this;
     }
     Login.prototype.render = function () {
-        return (React.createElement("div", null,
+        return (React.createElement("div", { className: "container" },
             React.createElement("h1", null, "\u30ED\u30B0\u30A4\u30F3"),
-            React.createElement("div", null,
-                "\u30E6\u30FC\u30B6\u30FC\u540D",
-                React.createElement("input", { type: "text", value: this.state.email, onChange: this.updateEmail })),
-            React.createElement("div", null,
-                "\u30D1\u30B9\u30EF\u30FC\u30C9",
-                React.createElement("input", { type: "password", value: this.state.password, onChange: this.updatePassword })),
-            React.createElement("button", { onClick: this.login }, "\u30ED\u30B0\u30A4\u30F3"),
-            React.createElement("button", null, "\u65B0\u898F\u767B\u9332\u306F\u3053\u3061\u3089")));
+            React.createElement("label", { htmlFor: "email" }, "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"),
+            React.createElement("input", { type: "text", value: this.state.email, onChange: this.updateEmail, id: "email" }),
+            React.createElement("label", { htmlFor: "password" }, "\u30D1\u30B9\u30EF\u30FC\u30C9"),
+            React.createElement("input", { type: "password", value: this.state.password, onChange: this.updatePassword, id: "password" }),
+            React.createElement("button", { className: "waves-effect waves-light btn", onClick: this.login }, "\u30ED\u30B0\u30A4\u30F3")));
     };
     return Login;
 }(React.Component));
@@ -48967,13 +48964,13 @@ var Images = /** @class */ (function (_super) {
         return _this;
     }
     Images.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement("ul", null, this.createImages()),
+        return (React.createElement("div", { className: "container" },
+            React.createElement("ul", { className: "collection" }, this.createImages()),
             React.createElement(ImageAcceptable_1.ImageAcceptable, { addImages: this.addImages })));
     };
     Images.prototype.createImages = function () {
-        return this.state.images.map(function (i, j) { return React.createElement("li", { key: j },
-            React.createElement("img", { src: i })); });
+        return this.state.images.map(function (i, j) { return React.createElement("li", { className: "collection-item", key: j },
+            React.createElement("img", { className: "responsive-img", src: i })); });
     };
     return Images;
 }(React.Component));
@@ -49098,15 +49095,27 @@ var ImageAcceptable = /** @class */ (function (_super) {
         return _this;
     }
     ImageAcceptable.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement("div", { style: {
-                    backgroundColor: "#cccccc",
-                    border: "dotted 2px black",
-                    width: "100%",
-                    height: "100px",
-                    borderRadius: "10px",
-                }, onDrop: this.dropFiles }, "Drop files here"),
-            React.createElement("input", { type: "file", onChange: this.setFiles })));
+        return (React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "col s12" },
+                React.createElement("label", { className: "waves-effect waves-light btn-large", htmlFor: "upload" },
+                    "\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E\u3059\u308B",
+                    React.createElement("input", { style: { display: "none" }, type: "file", onChange: this.setFiles, id: "upload", multiple: true }))),
+            React.createElement("div", { className: "col s12" },
+                React.createElement("div", { style: {
+                        border: "1px solid #eee",
+                        margin: "7px 0",
+                        lineHeight: "50px",
+                        fontSize: "28px",
+                        backgroundColor: "tomato",
+                        color: "white",
+                        padding: "0",
+                        height: "100px",
+                    }, onDrop: this.dropFiles, onDragOver: this.dragOver }, "\u3053\u3053\u306B\u30D5\u30A1\u30A4\u30EB\u3092\u30C9\u30ED\u30C3\u30D7"))));
+    };
+    ImageAcceptable.prototype.dragOver = function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     };
     ImageAcceptable.prototype.convertFileToBase64 = function (file) {
         return __awaiter(this, void 0, void 0, function () {

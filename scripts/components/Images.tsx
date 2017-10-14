@@ -28,8 +28,8 @@ export class Images extends React.Component<Props, State> {
   }
   public render() {
     return (
-      <div>
-        <ul>
+      <div className={"container"}>
+        <ul className="collection">
           {this.createImages()}
         </ul>
         <ImageAcceptable addImages={this.addImages}/>
@@ -45,6 +45,6 @@ export class Images extends React.Component<Props, State> {
   }
 
   createImages() {
-    return this.state.images.map((i, j) => <li key={j}><img src={i}></img></li>);
+    return this.state.images.map((i, j) => <li className="collection-item" key={j}><img className={"responsive-img"} src={i}></img></li>);
   }
 }

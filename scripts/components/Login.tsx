@@ -18,11 +18,11 @@ export class Login extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div>
+      <div className={"container"}>
         <h1>ログイン</h1>
-        <div>ユーザー名<input type="text" value={this.state.email} onChange={this.updateEmail}/></div>
-        <div>パスワード<input type="password" value={this.state.password} onChange={this.updatePassword}/></div>
-        <button onClick={this.login}>ログイン</button><button>新規登録はこちら</button>
+        <label htmlFor="email">メールアドレス</label><input type="text" value={this.state.email} onChange={this.updateEmail} id="email"/>
+        <label htmlFor="password">パスワード</label><input type="password" value={this.state.password} onChange={this.updatePassword} id="password"/>
+        <button className={"waves-effect waves-light btn"} onClick={this.login}>ログイン</button>
       </div>
     );
   }

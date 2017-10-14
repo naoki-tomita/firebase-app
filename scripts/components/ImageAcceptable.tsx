@@ -10,15 +10,24 @@ interface Props {
 export class ImageAcceptable extends React.Component<Props> {
   public render() {
     return (
-      <div>
-        <div style={{ 
-          backgroundColor: "#cccccc", 
-          border: "dotted 2px black", 
-          width: "100%", 
-          height: "100px",
-          borderRadius: "10px",
-        }} onDrop={this.dropFiles}>Drop files here</div>
-        <input type="file" onChange={this.setFiles}/>
+      <div className="row">
+        <div className="col s12">
+          <label className="waves-effect waves-light btn-large" htmlFor="upload">
+            ファイルを選択する<input style={{ display: "none" }} type="file" onChange={this.setFiles} id="upload" multiple/>
+          </label>
+        </div>
+        <div className="col s12">
+          <div style={{ 
+            border: "1px solid #eee",
+            margin: "7px 0",
+            lineHeight: "50px",
+            fontSize: "28px",
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "0",
+            height: "100px",
+          }} onDrop={this.dropFiles} onDragOver={this.dragOver}>ここにファイルをドロップ</div>
+        </div>
       </div>
     );
   }
@@ -34,6 +43,12 @@ export class ImageAcceptable extends React.Component<Props> {
       arr.push(a);
     }
     this.props.addImages(arr);
+  }
+
+  private dragOver(evt: any) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
   }
 
   private dropFiles = async (evt: any) => {
